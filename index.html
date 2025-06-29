@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Retail AI Platform</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-green: #00ff41;
+            --dark-green: #00cc33;
+            --electric-green: #39ff14;
+            --cyber-green: #00ffff;
+            --black: #000000;
+            --dark-gray: #0a0a0a;
+            --medium-gray: #1a1a1a;
+            --light-gray: #2a2a2a;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--black);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Cyberpunk Grid Background */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            animation: gridPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.1; }
+        }
+
+        /* Animated Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            animation: particleFloat 8s linear infinite;
+            box-shadow: 0 0 6px var(--neon-green);
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 80px 0 60px;
+            position: relative;
+        }
+
+        .cyber-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            text-shadow: 
+                0 0 5px var(--neon-green),
+                0 0 10px var(--neon-green),
+                0 0 15px var(--neon-green),
+                0 0 20px var(--neon-green);
+            margin-bottom: 20px;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+            letter-spacing: 3px;
+        }
+
+        @keyframes titleGlow {
+            from {
+                text-shadow: 
+                    0 0 5px var(--neon-green),
+                    0 0 10px var(--neon-green),
+                    0 0 15px var(--neon-green),
+                    0 0 20px var(--neon-green);
+            }
+            to {
+                text-shadow: 
+                    0 0 10px var(--neon-green),
+                    0 0 20px var(--neon-green),
+                    0 0 30px var(--neon-green),
+                    0 0 40px var(--neon-green);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: rgba(0, 255, 65, 0.7);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Main Content Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            padding: 60px 0;
+            margin-bottom: 80px;
+        }
+
+        /* Cyber Cards */
+        .cyber-card {
+            background: linear-gradient(145deg, var(--dark-gray), var(--medium-gray));
+            border: 2px solid var(--light-gray);
+            border-radius: 20px;
+            padding: 50px 40px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            overflow: hidden;
+        }
+
+        .cyber-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+            transition: left 0.8s;
+        }
+
+        .cyber-card:hover::before {
+            left: 100%;
+        }
+
+        .cyber-card:hover {
+            border-color: var(--neon-green);
+            box-shadow: 
+                0 0 20px rgba(0, 255, 65, 0.3),
+                inset 0 0 20px rgba(0, 255, 65, 0.05);
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        .card-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--black), var(--dark-gray));
+            border: 3px solid var(--neon-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            animation: iconRotate 10s linear infinite;
+        }
+
+        .card-icon::after {
+            content: '';
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            border: 2px solid transparent;
+            border-top: 2px solid var(--neon-green);
+            border-radius: 50%;
+            animation: iconSpin 3s linear infinite;
+        }
+
+        @keyframes iconRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes iconSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+
+        .card-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--neon-green);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        .card-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cyber-button {
+            display: block;
+            width: 100%;
+            padding: 18px 0;
+            background: linear-gradient(45deg, var(--black), var(--dark-gray));
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .cyber-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .cyber-button:hover::before {
+            left: 100%;
+        }
+
+        .cyber-button:hover {
+            background: var(--neon-green);
+            color: var(--black);
+            box-shadow: 
+                0 0 20px var(--neon-green),
+                inset 0 0 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Features Section */
+        .features-section {
+            margin: 100px 0;
+        }
+
+        .features-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            color: var(--neon-green);
+            text-align: center;
+            margin-bottom: 60px;
+            text-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--dark-gray);
+            border: 1px solid var(--light-gray);
+            border-radius: 15px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--neon-green);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--neon-green);
+        }
+
+        .feature-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            color: var(--neon-green);
+            margin-bottom: 15px;
+        }
+
+        .feature-text {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--light-gray);
+            margin-top: 80px;
+        }
+
+        .footer-text {
+            color: rgba(0, 255, 65, 0.6);
+            font-family: 'Orbitron', monospace;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cyber-title {
+                font-size: 3rem;
+            }
+            
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 40px 0;
+            }
+            
+            .cyber-card {
+                padding: 40px 30px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cyber-title {
+                font-size: 2.2rem;
+                letter-spacing: 1px;
+            }
+            
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-grid"></div>
+    
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="cyber-title">SMART RETAIL AI</h1>
+            <p class="subtitle">Next-Generation Retail Intelligence</p>
+            <p class="description">
+                Harness cutting-edge AI technology to revolutionize your retail operations. 
+                Predict market trends, optimize pricing strategies, and dominate the competition 
+                with our advanced machine learning platform.
+            </p>
+        </header>
+
+        <main class="main-grid">
+            <div class="cyber-card" onclick="openTrendAnalyzer()">
+                <div class="card-icon">📈</div>
+                <h2 class="card-title">TREND ANALYZER</h2>
+                <p class="card-description">
+                    Advanced AI-powered trend detection system that analyzes market demand patterns 
+                    and provides real-time visual insights. Discover what products are trending 
+                    and stay ahead of market shifts with precision analytics.
+                </p>
+                <button class="cyber-button" onclick="openTrendAnalyzer()">
+                    LAUNCH ANALYSIS
+                </button>
+            </div>
+
+            <div class="cyber-card" onclick="openPriceOptimizer()">
+                <div class="card-icon">💰</div>
+                <h2 class="card-title">PRICE OPTIMIZER</h2>
+                <p class="card-description">
+                    Intelligent pricing engine that calculates optimal selling prices based on 
+                    stock levels, demand trends, and product perishability. Maximize profits 
+                    while minimizing waste with smart pricing algorithms.
+                </p>
+                <button class="cyber-button" onclick="openPriceOptimizer()">
+                    OPTIMIZE PRICING
+                </button>
+            </div>
+        </main>
+
+        <section class="features-section">
+            <h2 class="features-title">SYSTEM CAPABILITIES</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">PRECISION AI</h3>
+                    <p class="feature-text">
+                        Military-grade machine learning algorithms deliver unprecedented accuracy 
+                        in market prediction and analysis.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">REAL-TIME PROCESSING</h3>
+                    <p class="feature-text">
+                        Lightning-fast data processing ensures instant results and immediate 
+                        actionable insights for critical decisions.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔮</div>
+                    <h3 class="feature-title">PREDICTIVE ANALYTICS</h3>
+                    <p class="feature-text">
+                        Advanced forecasting models predict future trends with remarkable 
+                        accuracy, giving you the competitive edge.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3 class="feature-title">QUANTUM SCALABILITY</h3>
+                    <p class="feature-text">
+                        From startups to enterprise giants, our platform scales infinitely 
+                        to meet your evolving business needs.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p class="footer-text">© 2025 SMART RETAIL AI - POWERED BY NEURAL NETWORKS</p>
+    </footer>
+
+    <script>
+        // Your Hugging Face URLs - Replace these with your actual URLs
+        const TREND_ANALYZER_URL = 'https://huggingface.co/spaces/shibagni/walmart-demand-forecast';
+        const PRICE_OPTIMIZER_URL = 'https://huggingface.co/spaces/shibagni/dynamic-pricing-engine';
+
+        function openTrendAnalyzer() {
+            window.open(TREND_ANALYZER_URL, '_blank');
+        }
+
+        function openPriceOptimizer() {
+            window.open(PRICE_OPTIMIZER_URL, '_blank');
+        }
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+
+            // Add click ripple effect to cards
+            const cards = document.querySelectorAll('.cyber-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    const ripple = document.createElement('div');
+                    const rect = card.getBoundingClientRect();
+                    const size = 100;
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        background: radial-gradient(circle, rgba(0,255,65,0.3) 0%, transparent 70%);
+                        border-radius: 50%;
+                        left: ${x}px;
+                        top: ${y}px;
+                        animation: ripple 0.6s ease-out;
+                        pointer-events: none;
+                        z-index: 10;
+                    `;
+
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes ripple {
+                            to {
+                                transform: scale(4);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+
+                    card.appendChild(ripple);
+                    setTimeout(() => {
+                        ripple.remove();
+                        style.remove();
+                    }, 600);
+                });
+            });
+        });
+
+        // Parallax effect for particles
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const particles = document.getElementById('particles');
+            particles.style.transform = `translateY(${scrolled * 0.3}px)`;
+        });
+    </script>
+</body>
+</html>
